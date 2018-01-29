@@ -1,8 +1,8 @@
 const discord = require('discord.js');
 
-// Token to log into the server.
-// Tokens generated at: https://discordapp.com/developers/applications/me/395227173788581888
-var token = "Mzk1MjI3MTczNzg4NTgxODg4.DSgnnQ.vlpN_oy4aPcxZpEW2lRjJP1ZqCc";
+/* Login tokens generated at https://discordapp.com/developers/applications/me
+Token to log into the server */
+var token = "Token here";
 
 const client = new discord.Client();
 const fs = require('fs');
