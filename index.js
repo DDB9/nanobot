@@ -8,7 +8,7 @@ const client = new discord.Client();
 const fs = require('fs');
 client.quotes = require('./quotes.json');
 
-client.on ("ready", () => {
+client.on ('ready', () => {
     console.log('Nanobot updated.');
     client.user.setGame('>help');
 });
@@ -16,14 +16,21 @@ client.on ("ready", () => {
 // Prefix to call on the bot.
 const prefix = ">";
 
-client.on ("message", (message) => {
+client.on ('message', (message) => {
 
     message.content.toLowerCase();  // convert commands toLowerCase so simple typos don't matter.
     msg = message.content.toLowerCase();
 
     if (message.author.bot) return; // Ignore bots.
 
+    // WIP
     if (msg.startsWith (prefix + 'help')) {
+        message.channel.send({embed: {
+            color: 3447003,
+
+        }
+
+        })
         message.reply("Sorry" + message.author.username + ", but I am still in pre-alpha. >help will become available during alpha when more features are available.\nFor help send a mail to: neongekko1@gmail.com.\nI'm sorry for the inconvenience...!" );
     }
 
@@ -104,18 +111,22 @@ client.on ("message", (message) => {
     
     // Returns an invite link to add the bot to users servers.
     if (msg.startsWith(prefix + "invite")){
-        message.channel.send("Spread my virus: https://discordapp.com/oauth2/authorize?client_id=395227173788581888&scope=bot&permissions=1610087547"); 
+        message.channel.send("Spread my virus: https://goo.gl/7chwW8"); 
     }
 });
 
-client.on('guildMemberAdd', member => {
-    var greetings = [`Welcome to the server ${member}!`, `Say hello to manliest man, ${member}!`, `My robot senses are tingling... It's ${member}!`, `Bleep bloop, fellow human ${member} has arrived.`];
-    var randomizer = Math.floor(Math.random() * greetings.length);
-    // Send the message to the right channel
-    const welcomeChannel = member.guild.channels.find('entrance', 'member-log');
-    // If the channel is not present in the server, do nothing.
-    if (!welcomeChannel) return;
-    message.channel.send(greetings[randomizer]);
+client.on('guildMemberAdd', (member) => {
+    var role = member.guild.roles.find('name', 'Minion') // Looks for the "Minion" role.
+
+    if (!role) { // If the server doesn't have the 'Minion' role, search for a 'Member' role.
+        role = member.guild.roles.find('name', 'member');
+        if (!role) return; // If the server doesn't have a 'Member' role, do nothing.
+    }
+    
+        return; // If the server doesn't have the role "Minion", do nothing.
+
+    console.log('User ' + member.user.username + 'has joined your server.'); // Log the joined user to the console.
+    member.addRole(role);
 });
 // Logging into the server...
 client.login(token);
